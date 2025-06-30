@@ -1,0 +1,101 @@
+<header class="header">
+  <div class="logo">NutriBalance</div>
+  <nav class="tabs">
+    <button data-tab="home" class="active">Home</button>
+    <button data-tab="quick">Quick Add</button>
+    <button data-tab="manual">Manual Add</button>
+    <button data-tab="custom">Custom Foods</button>
+    <button data-tab="stats">Nutrition Stats</button>
+  </nav>
+</header>
+<main class="main-content">
+  <!-- Home -->
+  <section id="home" class="tab-content active">
+    <header class="hero">
+      <h1>Welcome back, {{ session.get("user") }}!</h1>
+      <p>Your personalized nutrition dashboard.</p>
+    </header>
+    <div class="container">
+      <section class="panel">
+        <h2><i class="fas fa-bullseye"></i> Personalized Nutrition Goals</h2>
+        <form id="goal-form" class="form-grid">
+          <label for="input-weight">Body Weight (kg):</label>
+          <input type="number" id="input-weight" placeholder="e.g. 70" required/>
+          <label for="input-goal">Fitness Goal:</label>
+          <select id="input-goal">
+            <option value="gain">Gain Muscle</option>
+            <option value="lose">Lose Fat</option>
+          </select>
+          <button type="button" id="calc-btn" class="full"><i class="fas fa-calculator"></i> Calculate Targets</button>
+        </form>
+        <div id="suggested" class="result-box"></div>
+        <h3><i class="fas fa-clipboard-list"></i> Set Your Daily Targets</h3>
+        <form id="set-targets" class="form-grid">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <label for="target-cal">Calories (kcal):</label>
+          <input type="number" id="target-cal" placeholder="e.g. 2500"/>
+          <label for="target-prot">Protein (g):</label>
+          <input type="number" id="target-prot" placeholder="e.g. 150"/>
+          <label for="target-carbs">Carbs (g):</label>
+          <input type="number" id="target-carbs" placeholder="e.g. 300"/>
+          <label for="target-fat">Fat (g):</label>
+          <input type="number" id="target-fat" placeholder="e.g. 70"/>
+          <button class="full" type="submit"><i class="fas fa-save"></i> Save Targets</button>
+        </form>
+      </section>
+    </div>
+    <footer class="footer"><p>&copy; 2025 NutriBalance</p></footer>
+  </section>
+
+  <!-- Quick Add -->
+  <section id="quick" class="tab-content">
+    <div class="food-cards" id="foodCards"></div>
+  </section>
+
+  <!-- Manual Add -->
+  <section id="manual" class="tab-content">
+    <form id="manualForm" class="form">
+      <input id="m-name" placeholder="Food name" required/>
+      <input id="m-grams" type="number" placeholder="Grams" required/>
+      <input id="m-protein" type="number" placeholder="Protein/100g" required/>
+      <input id="m-carbs" type="number" placeholder="Carbs/100g" required/>
+      <input id="m-fats" type="number" placeholder="Fat/100g" required/>
+      <input id="m-cal" type="number" placeholder="Calories/100g" required/>
+      <button type="submit"><i class="fas fa-plus"></i> Add</button>
+    </form>
+  </section>
+
+  <!-- Custom Foods -->
+  <section id="custom" class="tab-content">
+    <form id="customForm" class="form">
+      <input id="c-name" placeholder="Name" required/>
+      <input id="c-protein" type="number" placeholder="Protein/100g" required/>
+      <input id="c-carbs" type="number" placeholder="Carbs/100g" required/>
+      <input id="c-fats" type="number" placeholder="Fat/100g" required/>
+      <input id="c-cal" type="number" placeholder="Calories/100g" required/>
+      <button type="submit"><i class="fas fa-save"></i> Save</button>
+    </form>
+  </section>
+
+  <!-- Nutrition Stats -->
+  <section id="stats" class="tab-content">
+    <canvas id="nutriChart"></canvas>
+    <div class="stats-list" id="statsList"></div>
+  </section>
+</main>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script>
+  document.querySelectorAll(".tabs button").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll(".tabs button, .tab-content")
+        .forEach(el => el.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+      if (btn.dataset.tab === "stats") renderStats();
+    };
+  });
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('{{ url_for("static", filename="service-worker.js") }}');
+  }
+</script>
