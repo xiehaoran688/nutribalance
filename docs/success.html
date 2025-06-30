@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Welcome</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+  <div class="feedback-container">
+    <h1>Welcome, {{ value }}!</h1>
+    <form method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <textarea name="feedback" placeholder="Leave feedback…"></textarea>
+      <button type="submit">Submit Feedback</button>
+    </form>
+    <ul>
+      {% for fb in feedbacks %}<li>{{ fb }}</li>{% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
