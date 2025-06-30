@@ -1,0 +1,476 @@
+/* ===========================================
+   ========== Global variables & CSS reset ==========
+   =========================================== */
+:root {
+  --primary: #4caf50;
+  --bg:      #f5f5f5;
+  --card:    #fff;
+  --text:    #333;
+  --shadow:  rgba(0,0,0,0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+/* ========== Common links ========== */
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===========================================
+   ========== Background video (optional) ==========
+   =========================================== */
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.5) blur(1.2px);
+}
+
+/* ===========================================
+   ========== Authentication pages (Login/Signup/2FA) ==========
+   =========================================== */
+.auth-container {
+  position: relative;
+  top: 50%; transform: translateY(-50%);
+  max-width: 420px; margin: auto;
+  padding: 2rem 1.5rem;
+  background: rgba(255,255,255,0.92);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  text-align: center;
+}
+.auth-container h1 {
+  margin-bottom: 1rem;
+  color: var(--primary);
+  font: 600 1.75rem/1 "Segoe UI", sans-serif;
+}
+.auth-container .logo-img {
+  width: 100px; margin-bottom: 1rem;
+  animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.auth-container p {
+  margin-top: 1rem;
+  font-size: .9rem;
+  color: #444;
+}
+.auth-container p a {
+  color: var(--primary);
+}
+.auth-container .error {
+  color: #f44336;
+  margin: .5rem 0;
+  font-size: .95rem;
+}
+
+/* Input field + icon */
+.input-icon {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+.input-icon i {
+  position: absolute; top: 50%; left: 12px;
+  transform: translateY(-50%);
+  color: #666; font-size: 1rem;
+}
+.input-icon input {
+  width: 100%;
+  padding: .6rem 2.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  font-size: .95rem;
+}
+
+/* Password toggle (eye icon) */
+.password-toggle { position: relative; }
+.eye-icon {
+  position: absolute; top:50%; right:12px;
+  transform: translateY(-50%);
+  cursor: pointer; color: #888; font-size:.9rem;
+}
+
+/* Password strength & rules list */
+.password-conditions {
+  list-style: none;
+  margin: .5rem 0; padding: 0;
+  text-align: left;
+}
+.password-conditions li {
+  position: relative;
+  margin-left: 1rem;
+  padding-left: 1.4rem;
+  font-size: .85rem;
+  color: #333;
+}
+.password-conditions li::before {
+  content: "✗";
+  position: absolute; left: 0;
+  color: #f44336; font-weight: bold;
+}
+.password-conditions li.valid::before {
+  content: "✓";
+  color: var(--primary);
+}
+.password-strength {
+  margin-top: .5rem;
+  height: 6px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+#strength-bar {
+  height: 100%; width: 0;
+  transition: width .3s ease;
+}
+#strength-bar.weak   { background: #f44336; }
+#strength-bar.medium { background: #ffa000; }
+#strength-bar.strong { background: var(--primary); }
+#strength-text,
+#match-text {
+  font-size: .8rem;
+  margin-top: .3rem;
+  color: #888;
+  text-align: left;
+}
+
+/* QR code image */
+.auth-container form img {
+  display: block;
+  margin: 1rem auto;
+  max-width: 180px;
+}
+
+/* Authentication buttons */
+.auth-container button {
+  width: 100%;
+  padding: .8rem;
+  margin-top: .5rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font: 600 1rem/1 "Segoe UI", sans-serif;
+  cursor: pointer;
+  transition: background .3s ease;
+}
+.auth-container button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+.auth-container button:hover:not(:disabled) {
+  background: #388e3c;
+}
+
+/* ===========================================
+   ========== Main panel common ==========
+   =========================================== */
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card);
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 2px 4px var(--shadow);
+  position: sticky; top: 0; z-index: 10;
+}
+.navbar .logo {
+  font: bold 1.25rem/1 "Segoe UI", sans-serif;
+  color: var(--primary);
+}
+.navbar .user-info {
+  font-size: 1rem; color: #444;
+}
+.navbar .user-info i { margin-right: .3rem; color: var(--primary); }
+.navbar .user-info a {
+  margin-left: .5rem; color: #007bff;
+}
+.navbar .user-info a:hover { text-decoration: underline; }
+
+/* Welcome Banner */
+.welcome-banner {
+  margin: 1rem 1.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--card);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow);
+  text-align: center;
+}
+.welcome-banner h2 { color: var(--primary); margin-bottom: .3rem; }
+.welcome-banner p  { font-size: .95rem; color: #555; }
+
+/* Main navigation buttons */
+.main-nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  margin: 0 1.5rem 1.5rem;
+}
+.nav-btn {
+  padding: .5rem .9rem;
+  background: var(--card);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: .2s ease;
+}
+.nav-btn.active,
+.nav-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* 隐藏类 */
+.hidden {
+  display: none;
+}
+
+/* Footer */
+.footer {
+  margin: 2rem 1.5rem 0;
+  padding: 1rem;
+  background: #fafafa;
+  color: #666;
+  font-size: .9rem;
+  text-align: center;
+}
+
+/* ===========================================
+   ========== Section content styles ==========
+   =========================================== */
+/* Section common container */
+.main-section {
+  display: none;
+  margin: 0 1.5rem 2rem;
+  padding: 1.5rem;
+  background: var(--card);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.main-section.active {
+  display: block;
+}
+
+/* —— Home module —— */
+.section-header { margin-bottom: 1rem; }
+.section-header h3 {
+  color: var(--primary);
+  margin-bottom: .3rem;
+}
+.section-header .guide-text {
+  font-size: .85rem;
+  color: #555;
+  line-height: 1.4;
+  margin-top: .3rem;
+}
+.section-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 2rem 0;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+.form-grid label {
+  font-size: .9rem; color: #333;
+}
+.form-grid input,
+.form-grid select {
+  padding: .5rem;
+  font-size: .95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+}
+.green-btn {
+  display: block;
+  width: 100%;
+  padding: .6rem 0;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font: bold 1rem/1 "Segoe UI", sans-serif;
+  cursor: pointer;
+  transition: background .3s ease;
+}
+.green-btn.full {
+  grid-column: 1 / -1;
+}
+.green-btn:hover {
+  background: #388e3c;
+}
+.result-box {
+  margin-bottom: 1.5rem;
+  padding: .8rem 1rem;
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 6px;
+  color: #2e7d32;
+  font-size: .95rem;
+}
+
+/* —— Quick Add cards —— */
+.food-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+  margin: 1rem auto;
+  max-width: 800px;
+}
+.food-cards .card {
+  padding: 1rem;
+  background: var(--bg);
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--shadow);
+  cursor: pointer;
+  transition: .2s ease;
+}
+.food-cards .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+.food-cards img {
+  width: 64px; height: 64px;
+  object-fit: contain;
+  margin-bottom: .5rem;
+}
+.food-cards span {
+  display: block;
+  font: 500 1rem/1 "Segoe UI", sans-serif;
+  color: #333;
+}
+
+/* —— Manual Add & Custom Foods form —— */
+.manual-form {
+  display: flex; flex-wrap: wrap; gap: .8rem;
+  margin-bottom: 1rem;
+}
+.manual-form input {
+  flex: 1 1 45%;
+  padding: .5rem;
+  font-size: .95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.manual-form button {
+  flex: 1 1 100%;
+  max-width: 150px;
+  margin-top: .5rem;
+}
+
+/* —— Nutrition Stats —— */
+.stats-wrapper {
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: center;
+  gap: 2rem;
+}
+#nutriChart {
+  max-width: 250px; max-height: 250px;
+}
+.stats-list ul {
+  list-style: none; padding: 0; margin: 0;
+}
+.stats-list li {
+  display: flex; align-items: center;
+  margin-bottom: .5rem;
+}
+.stats-list li:before {
+  content: "•"; margin-right: .5rem;
+  color: var(--primary);
+}
+.unhealthy { color: #f44336; margin-left: .3rem; font-weight: bold; }
+
+/* —— Added entries list & delete button —— */
+.entry-list {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--card);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.entry-list h4 {
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+.entry-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.entry-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #eee;
+}
+.entry-list li:last-child {
+  border-bottom: none;
+}
+.delete-entry-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #f44336;
+  transition: color 0.2s;
+}
+/* Emoji fallback for cases where FontAwesome doesn’t load */
+.delete-entry-btn::after {
+  content: " 🗑️";
+}
+/* Hover state */
+.delete-entry-btn:hover {
+  color: #d32f2f;
+}
+
+/* Responsive: small screen vertical layout —— */
+@media (max-width: 768px) {
+  .stats-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #nutriChart {
+    margin: 0 auto;
+  }
+}
